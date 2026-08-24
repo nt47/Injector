@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="头文件\Core">
+      <UniqueIdentifier>{9141280b-469c-4e3b-8a1b-ede8d812b121}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Core">
+      <UniqueIdentifier>{6c228e47-bbb6-4489-aac7-ee34e64aa6ce}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -39,6 +45,18 @@
     <ClInclude Include="CAutoMutex.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="apis.h">
+      <Filter>头文件\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Inject32a.h">
+      <Filter>头文件\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="InjectWithEvent.h">
+      <Filter>头文件\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Inject.h">
+      <Filter>头文件\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -61,6 +79,18 @@
     </ClCompile>
     <ClCompile Include="CAutoMutex.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="apis.cpp">
+      <Filter>源文件\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Inject32a.cpp">
+      <Filter>源文件\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="InjectWithEvent.cpp">
+      <Filter>源文件\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Inject.cpp">
+      <Filter>源文件\Core</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

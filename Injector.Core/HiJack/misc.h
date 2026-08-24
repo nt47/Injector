@@ -1,5 +1,5 @@
 #pragma once
-#include"utils.h"
+#include<Windows.h>
 
 typedef struct _SHARED_DATA
 {
@@ -11,12 +11,5 @@ typedef struct _SHARED_DATA
 
 } SHARED_DATA, * PSHARED_DATA;
 
-typedef struct _EVENT_DATA
-{
-	std::wstring path;
-	std::wstring event_id;
 
-}EVENT_DATA, * PEVENT_DATA;
-
-extern HANDLE g_hEvent;
-bool ShareMemory(LPVOID pParam);
+bool ShareMemory(const wchar_t* eventId, PSHARED_DATA new_shared_data);

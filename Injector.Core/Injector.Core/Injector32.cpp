@@ -35,17 +35,18 @@ namespace Injector32 {
 
 	long GetProcessExportTable32(HANDLE hProcess, const char* ModuleName, IAT_EAT_INFO tbinfo[], int tb_info_max)
 	{
-		ULONG muBase = 0, count = 0;
+		ULONG_PTR muBase = NULL;
+		long count = 0;
 		PIMAGE_DOS_HEADER pDosHeader = (PIMAGE_DOS_HEADER)new BYTE[sizeof(IMAGE_DOS_HEADER)];
 		PIMAGE_NT_HEADERS32 pNtHeaders = (PIMAGE_NT_HEADERS32)new BYTE[sizeof(IMAGE_NT_HEADERS32)];
 		PIMAGE_EXPORT_DIRECTORY pExport = (PIMAGE_EXPORT_DIRECTORY)new BYTE[sizeof(IMAGE_EXPORT_DIRECTORY)];
 		DWORD dwStup = 0, dwOffset = 0;
 		char strName[130];
 		//拿到目标模块的BASE
-		muBase = (ULONG)GetRemoteModuleHandleByProcessHandleA(hProcess, ModuleName);
+		muBase = (ULONG_PTR)GetRemoteModuleHandleByProcessHandleA(hProcess, ModuleName);
 		if (!muBase)
 		{
-			printf("GetRemoteModuleHandleByProcessHandleA failed!", "GetProcessExportTable32");
+			printf("GetRemoteModuleHandleByProcessHandleA failed! \n");
 			return 0;
 		}
 		//获取IMAGE_DOS_HEADER
@@ -63,7 +64,7 @@ namespace Injector32 {
 		{
 			return 0;
 		}
-		for (int i = 0; i < pExport->NumberOfNames; i++)
+		for (int i = 0; i < (int)pExport->NumberOfNames; i++)
 		{
 			char bFuncName[100];
 			ULONG ulPointer;
@@ -85,7 +86,7 @@ namespace Injector32 {
 			tbinfo[count].RecordAddr = (ULONG64)(muBase + pExport->AddressOfFunctions + 4 * usFuncId);
 			tbinfo[count].ModBase = muBase;
 			count++;
-			if (count > (ULONG)tb_info_max)
+			if (count > tb_info_max)
 				goto exit_sub;
 		}
 	exit_sub:
@@ -164,9 +165,9 @@ namespace Injector32 {
 
 		SEHExceptionSupport = false;
 
-		data.pbase = (DWORD)pTargetBase;
+		data.pbase = (DWORD)(DWORD64)pTargetBase;
 		data.fdwReasonParam = fdwReason;
-		data.reservedParam = (DWORD)lpReserved;
+		data.reservedParam = (DWORD)(DWORD64)lpReserved;
 		data.SEHSupport = SEHExceptionSupport;
 
 

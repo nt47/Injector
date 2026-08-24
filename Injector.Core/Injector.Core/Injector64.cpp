@@ -251,7 +251,7 @@ namespace Injector64 {
 
 #pragma runtime_checks( "", off )
 #pragma optimize( "", off )
-	void __stdcall Shellcode(MANUAL_MAPPING_DATA* pData) {
+	void __stdcall Shellcode(MANUAL_MAPPING_DATA* pData) {//编译成x86版本，可获取Shellcode
 		if (!pData) {
 			pData->hMod = (HINSTANCE)0x404040;
 			return;
@@ -291,7 +291,8 @@ namespace Injector64 {
 			auto* pImportDescr = reinterpret_cast<IMAGE_IMPORT_DESCRIPTOR*>(pBase + pOpt->DataDirectory[IMAGE_DIRECTORY_ENTRY_IMPORT].VirtualAddress);
 			while (pImportDescr->Name) {
 				char* szMod = reinterpret_cast<char*>(pBase + pImportDescr->Name);
-				HINSTANCE hDll = _LoadLibraryA(szMod);
+				//导入表里的 DLL 名必须是 ANSI，这是PE 文件格式本身的硬性规定
+				HINSTANCE hDll = _LoadLibraryA(szMod);//加载dll的依赖
 
 				ULONG_PTR* pThunkRef = reinterpret_cast<ULONG_PTR*>(pBase + pImportDescr->OriginalFirstThunk);
 				ULONG_PTR* pFuncRef = reinterpret_cast<ULONG_PTR*>(pBase + pImportDescr->FirstThunk);

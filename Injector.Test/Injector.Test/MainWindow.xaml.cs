@@ -27,19 +27,82 @@ namespace Injector.Test
         public MainWindow()
         {
             InitializeComponent();
+
+            CLR.Injector.Console();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            CLR.Injector.Console();
+            try
+            {
+                CLR.Injector.Inject(Process.GetProcessesByName("Client32")[0].Id, "E:\\Injector\\HiJack32.dll");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
 
-            //Inject(Process.GetProcessesByName("Client64")[0].Id, "HiJack64.dll");
 
-            CLR.Injector.Inject(Process.GetProcessesByName("Client64")[0].Id, "HiJack64.dll");
+        }
 
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                CLR.Injector.Inject(Process.GetProcessesByName("Client64")[0].Id, "E:\\Injector\\HiJack64.dll");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
 
-            //CLR.Injector.Inject(Process.GetProcessesByName("Client32")[0].Id, "HiJack32.dll");
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Inject(Process.GetProcessesByName("Client32")[0].Id, "E:\\Injector\\HiJack32.dll");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
 
+        private void Button_Click_3(object sender, RoutedEventArgs e)//InjectWithEvent32
+        {
+            try
+            {
+                CLR.Injector.InjectWithEvent(Process.GetProcessesByName("Client32")[0].Id, "E:\\Injector\\HiJack32e.dll", "#002");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void Button_Click_4(object sender, RoutedEventArgs e)//InjectWithEvent64
+        {
+            try
+            {
+                CLR.Injector.InjectWithEvent(Process.GetProcessesByName("Client64")[0].Id, "E:\\Injector\\HiJack64e.dll", "#002");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void Button_Click_5(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Inject(Process.GetProcessesByName("Client64")[0].Id, "E:\\Injector\\HiJack64.dll");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

@@ -1,88 +1,94 @@
 #include"pch.h"
 #include"misc.h"
 #include<iostream>
+#include<string>
 
 // 全局变量，用于线程之间共享
-HANDLE g_hEvent=NULL;
+HANDLE g_hEvent = NULL;
 
 bool ShareMemory(LPVOID pParam)
 {
-    // 创建共享内存
-    HANDLE hMapFile = CreateFileMapping(
-        INVALID_HANDLE_VALUE,   // 使用页面文件创建共享内存
-        NULL,                   // 默认安全级别
-        PAGE_READWRITE,         // 可读写访问权限
-        0,                      // 高位字节偏移量
-        sizeof(SHARED_DATA),        // 共享内存大小（字节）
-        L"Injector.SharedMemory");     // 共享内存名称
+	std::wstring event_id = (*((PEVENT_DATA)pParam)).event_id;
+	std::wstring path = (*((PEVENT_DATA)pParam)).path;
 
-    if (hMapFile == NULL)
-    {
-        std::cout << "Could not create file mapping object (" << GetLastError() << ")." << std::endl;
-        return false;
-    }
+	std::wstring mapFileName = L"Injector.SharedMemory" + event_id;
 
-    // 将共享内存映射到进程的地址空间
-    PSHARED_DATA shared_data = (PSHARED_DATA)MapViewOfFile(
-        hMapFile,           // 共享内存句柄
-        FILE_MAP_WRITE,     // 写访问权限
-        0,
-        0,
-        sizeof(SHARED_DATA));
+	// 创建共享内存
+	HANDLE hMapFile = CreateFileMapping(
+		INVALID_HANDLE_VALUE,   // 使用页面文件创建共享内存
+		NULL,                   // 默认安全级别
+		PAGE_READWRITE,         // 可读写访问权限
+		0,                      // 高位字节偏移量
+		sizeof(SHARED_DATA),        // 共享内存大小（字节）
+		mapFileName.c_str());     // 共享内存名称
 
-    if (shared_data == NULL)
-    {
-        std::cout << "Could not map view of file (" << GetLastError() << ")." << std::endl;
-        CloseHandle(hMapFile);
-        return false;
-    }
+	if (hMapFile == NULL)
+	{
+		std::cout << "Could not create file mapping object (" << GetLastError() << ")." << std::endl;
+		return false;
+	}
 
-    // 在共享内存中写入数据
-    TCHAR tzSrcPath[MAX_PATH];
-    GetModuleFileName(GetModuleHandle(NULL), tzSrcPath, MAX_PATH); //获取本目录下的
-    PathRemoveFileSpec(tzSrcPath);
+	// 将共享内存映射到进程的地址空间
+	PSHARED_DATA shared_data = (PSHARED_DATA)MapViewOfFile(
+		hMapFile,           // 共享内存句柄
+		FILE_MAP_WRITE,     // 写访问权限
+		0,
+		0,
+		sizeof(SHARED_DATA));
 
-    GetCurrentDirectory(sizeof(shared_data->src_exe_folder), shared_data->src_exe_folder);
-    wcscpy_s(shared_data->src_dll_folder, sizeof(shared_data->src_dll_folder), tzSrcPath);
+	if (shared_data == NULL)
+	{
+		std::cout << "Could not map view of file (" << GetLastError() << ")." << std::endl;
+		CloseHandle(hMapFile);
+		return false;
+	}
 
+	// 在共享内存中写入数据
+	TCHAR tzSrcPath[MAX_PATH];
+	GetModuleFileName(GetModuleHandle(NULL), tzSrcPath, MAX_PATH); //获取本目录下的
+	PathRemoveFileSpec(tzSrcPath);
 
-    TCHAR tzTargetFolder[MAX_PATH];
-    TCHAR tzTargetName[MAX_PATH];
-
-    wcscpy_s(tzTargetName, sizeof(tzTargetName), (wchar_t*)pParam);//只保留文件名
-    PathStripPath(tzTargetName);
-
-    wcscpy_s(tzTargetFolder, sizeof(tzTargetFolder), (wchar_t*)pParam);//只保留目录
-    PathRemoveFileSpec(tzTargetFolder);
+	GetCurrentDirectory(sizeof(shared_data->src_exe_folder), shared_data->src_exe_folder);
+	wcscpy_s(shared_data->src_dll_folder, sizeof(shared_data->src_dll_folder), tzSrcPath);
 
 
-    wcscpy_s(shared_data->target_exe_folder, sizeof(shared_data->target_exe_folder), tzTargetFolder);
-    wcscpy_s(shared_data->target_exe_name, sizeof(shared_data->target_exe_name), tzTargetName);
+	TCHAR tzTargetFolder[MAX_PATH];
+	TCHAR tzTargetName[MAX_PATH];
 
-    // 发送进程事件信号
-    SetEvent(g_hEvent);
+	wcscpy_s(tzTargetName, sizeof(tzTargetName), (wchar_t*)path.c_str());//只保留文件名
+	PathStripPath(tzTargetName);
+
+	wcscpy_s(tzTargetFolder, sizeof(tzTargetFolder), (wchar_t*)path.c_str());//只保留目录
+	PathRemoveFileSpec(tzTargetFolder);
 
 
+	wcscpy_s(shared_data->target_exe_folder, sizeof(shared_data->target_exe_folder), tzTargetFolder);
+	wcscpy_s(shared_data->target_exe_name, sizeof(shared_data->target_exe_name), tzTargetName);
 
-    // 创建一个事件，用于通知另一个进程数据已写入
-    HANDLE hEvent = CreateEvent(NULL, FALSE, FALSE, L"Injector.Event001");
-    if (hEvent == NULL)
-    {
-        //MessageBox(0, L"创建事件失败", 0, 0);
-        std::cout << "Could not create event object (" << GetLastError() << ")." << std::endl;
-        UnmapViewOfFile(shared_data);
-        CloseHandle(hMapFile);
-        return false;
-    }
+	// 发送进程事件信号
+	SetEvent(g_hEvent);
 
-    // 等待另一个进程读取数据完毕
-    WaitForSingleObject(hEvent, INFINITE);
 
-    //MessageBox(0, L"事件结束", 0, 0);
-    // 清理资源
-    CloseHandle(hEvent);
-    UnmapViewOfFile(shared_data);
-    CloseHandle(hMapFile);
+	std::wstring eventName = L"Injector.Event" + event_id;
+	// 创建一个事件，用于通知另一个进程数据已写入
+	HANDLE hEvent = CreateEvent(NULL, FALSE, FALSE, eventName.c_str());
+	if (hEvent == NULL)
+	{
+		//MessageBox(0, L"创建事件失败", 0, 0);
+		std::cout << "Could not create event object (" << GetLastError() << ")." << std::endl;
+		UnmapViewOfFile(shared_data);
+		CloseHandle(hMapFile);
+		return false;
+	}
 
-    return true;
+	// 等待另一个进程读取数据完毕
+	WaitForSingleObject(hEvent, INFINITE);
+
+	//MessageBox(0, L"事件结束", 0, 0);
+	// 清理资源
+	CloseHandle(hEvent);
+	UnmapViewOfFile(shared_data);
+	CloseHandle(hMapFile);
+
+	return true;
 }

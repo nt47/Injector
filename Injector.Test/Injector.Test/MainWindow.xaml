@@ -7,7 +7,12 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="427,290,0,0" VerticalAlignment="Top" Height="48" Width="125" Click="Button_Click"/>
+        <Button Content="Inject32" HorizontalAlignment="Left" Margin="369,313,0,0" VerticalAlignment="Top" Height="48" Width="125" Click="Button_Click"/>
+        <Button Content="Inject64" HorizontalAlignment="Left" Margin="532,313,0,0" VerticalAlignment="Top" Height="48" Width="121" Click="Button_Click_1"/>
+        <Button Content="Native32" HorizontalAlignment="Left" Margin="451,149,0,0" VerticalAlignment="Top" Height="46" Width="108" Click="Button_Click_2"/>
+        <Button Content="InjectWithEvent32" HorizontalAlignment="Left" Height="46" Margin="644,149,0,0" VerticalAlignment="Top" Width="112" Click="Button_Click_3"/>
+        <Button Content="InjectWithEvent64" HorizontalAlignment="Left" Margin="644,221,0,0" VerticalAlignment="Top" Height="42" Width="112" Click="Button_Click_4"/>
+        <Button Content="Native64" HorizontalAlignment="Left" Margin="451,221,0,0" VerticalAlignment="Top" Height="42" Width="108" Click="Button_Click_5"/>
 
     </Grid>
 </Window>
