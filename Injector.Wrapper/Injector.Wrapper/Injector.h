@@ -6,9 +6,7 @@ using namespace System;
 using namespace System::Runtime::InteropServices;//为了用Marshal
 
 
-namespace Core {
-	BOOL InjectWithEvent(int PID, const wchar_t* dllPath, const wchar_t* eventId);
-}
+
 
 namespace CLR {
 
@@ -17,6 +15,7 @@ namespace CLR {
 		//静态lib导出也接纳
 		API DLLIMPORT void Console();
 		API DLLIMPORT BOOL Inject(int PID, const wchar_t* dllPath);
+		BOOL InjectWithEvent(int PID, const wchar_t* dllPath, const wchar_t* eventId);
 
 	}
 

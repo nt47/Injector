@@ -16,7 +16,7 @@
 #endif
 
 
-BOOL Core::InjectWithEvent(int PID, const wchar_t* dllPath, const wchar_t* eventId)
+BOOL CLR::Native::InjectWithEvent(int PID, const wchar_t* dllPath, const wchar_t* eventId)
 {
 	CAutoMutex MutexLock;
 

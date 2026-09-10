@@ -43,7 +43,7 @@ namespace CLR {
 		std::wstring raw_dllPath = marshal_as<std::wstring>(dllPath);
 		std::wstring raw_eventId = marshal_as<std::wstring>(eventId);
 
-		return Core::InjectWithEvent(PID, raw_dllPath.c_str(), raw_eventId.c_str());
+		return CLR::Native::InjectWithEvent(PID, raw_dllPath.c_str(), raw_eventId.c_str());
 	}
 }
 
