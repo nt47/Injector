@@ -1,7 +1,7 @@
 ﻿#include"pch.h"
 #include"Inject.h"
 #include<string>
-#include"apis.h"
+#include"api.h"
 #include"Injector32.h"
 #include"Injector64.h"
 

@@ -147,7 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="apis.h" />
+    <ClInclude Include="api.h" />
     <ClInclude Include="CAutoMutex.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Inject.h" />
@@ -161,7 +161,7 @@
     <ClInclude Include="utils.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="apis.cpp" />
+    <ClCompile Include="api.cpp" />
     <ClCompile Include="CAutoMutex.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="Inject.cpp" />

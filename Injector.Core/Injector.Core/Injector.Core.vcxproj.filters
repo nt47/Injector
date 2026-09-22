@@ -45,7 +45,7 @@
     <ClInclude Include="CAutoMutex.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="apis.h">
+    <ClInclude Include="api.h">
       <Filter>头文件\Core</Filter>
     </ClInclude>
     <ClInclude Include="Inject32a.h">
@@ -80,7 +80,7 @@
     <ClCompile Include="CAutoMutex.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="apis.cpp">
+    <ClCompile Include="api.cpp">
       <Filter>源文件\Core</Filter>
     </ClCompile>
     <ClCompile Include="Inject32a.cpp">
