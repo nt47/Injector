@@ -7,12 +7,12 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button Content="Inject32" HorizontalAlignment="Left" Margin="369,313,0,0" VerticalAlignment="Top" Height="48" Width="125" Click="Button_Click"/>
-        <Button Content="Inject64" HorizontalAlignment="Left" Margin="532,313,0,0" VerticalAlignment="Top" Height="48" Width="121" Click="Button_Click_1"/>
-        <Button Content="Native32" HorizontalAlignment="Left" Margin="451,149,0,0" VerticalAlignment="Top" Height="46" Width="108" Click="Button_Click_2"/>
-        <Button Content="InjectWithEvent32" HorizontalAlignment="Left" Height="46" Margin="644,149,0,0" VerticalAlignment="Top" Width="112" Click="Button_Click_3"/>
-        <Button Content="InjectWithEvent64" HorizontalAlignment="Left" Margin="644,221,0,0" VerticalAlignment="Top" Height="42" Width="112" Click="Button_Click_4"/>
-        <Button Content="Native64" HorizontalAlignment="Left" Margin="451,221,0,0" VerticalAlignment="Top" Height="42" Width="108" Click="Button_Click_5"/>
+        <Button Content="Inject32" HorizontalAlignment="Left" Margin="446,154,0,0" VerticalAlignment="Top" Height="42" Width="125" Click="Button_Inject32_Click"/>
+        <Button Content="Inject64" HorizontalAlignment="Left" Margin="446,223,0,0" VerticalAlignment="Top" Height="42" Width="125" Click="Button_Inject64_Click"/>
+        <Button Content="InjectWithEvent32" HorizontalAlignment="Left" Height="46" Margin="644,154,0,0" VerticalAlignment="Top" Width="112" Click="Button_InjectWithEvent32_Click"/>
+        <Button Content="InjectWithEvent64" HorizontalAlignment="Left" Margin="644,223,0,0" VerticalAlignment="Top" Height="42" Width="112" Click="Button_InjectWithEvent64_Click" RenderTransformOrigin="0.523,-1.028"/>
+        <Button Content="Native32" HorizontalAlignment="Left" Margin="488,325,0,0" VerticalAlignment="Top" Height="52" Width="108" Click="Button_Native32_Click"/>
+        <Button Content="Native64" HorizontalAlignment="Left" Margin="622,327,0,0" VerticalAlignment="Top" Height="50" Width="108" Click="Button_Native64_Click" RenderTransformOrigin="0.456,0.026"/>
 
     </Grid>
 </Window>

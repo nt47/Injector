@@ -6,14 +6,6 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Injector.Test
 {
@@ -31,7 +23,7 @@ namespace Injector.Test
             CLR.Injector.Console();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Button_Inject32_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -45,7 +37,7 @@ namespace Injector.Test
 
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void Button_Inject64_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -57,19 +49,7 @@ namespace Injector.Test
             }
         }
 
-        private void Button_Click_2(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                Inject(Process.GetProcessesByName("Client32")[0].Id, "E:\\Injector\\HiJack32.dll");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
-        private void Button_Click_3(object sender, RoutedEventArgs e)//InjectWithEvent32
+        private void Button_InjectWithEvent32_Click(object sender, RoutedEventArgs e)//InjectWithEvent32
         {
             try
             {
@@ -81,7 +61,7 @@ namespace Injector.Test
             }
         }
 
-        private void Button_Click_4(object sender, RoutedEventArgs e)//InjectWithEvent64
+        private void Button_InjectWithEvent64_Click(object sender, RoutedEventArgs e)//InjectWithEvent64
         {
             try
             {
@@ -93,7 +73,19 @@ namespace Injector.Test
             }
         }
 
-        private void Button_Click_5(object sender, RoutedEventArgs e)
+        private void Button_Native32_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Inject(Process.GetProcessesByName("Client32")[0].Id, "E:\\Injector\\HiJack32.dll");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void Button_Native64_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -104,5 +96,6 @@ namespace Injector.Test
                 MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
     }
 }
