@@ -13,7 +13,7 @@ namespace CLR {
 	namespace Native {
 		//先编译出dll，再编译lib，警告消失
 		//静态lib导出也接纳
-		API DLLIMPORT void Console();
+		API DLLIMPORT void Console();//DLLIMPORT可以不写
 		API DLLIMPORT BOOL Inject(int PID, const wchar_t* dllPath);
 		BOOL InjectWithEvent(int PID, const wchar_t* dllPath, const wchar_t* eventId);
 
