@@ -2,6 +2,7 @@ from pathlib import Path
 import shutil
 import filecmp
 from fnmatch import fnmatchcase
+import ctypes
 
 # 获取当前脚本所在目录的文件夹名
 project_name = Path(__file__).resolve().parent.name
@@ -92,6 +93,10 @@ def sync():
         if src.is_dir():
             if not dst.exists() and not DRY_RUN:
                 dst.mkdir(parents=True, exist_ok=True)
+                src_attrs = ctypes.windll.kernel32.GetFileAttributesW(str(src))
+                dst_attrs=ctypes.windll.kernel32.SetFileAttributesW(str(dst), src_attrs)
+                #print(hex(src_attrs))
+                #print(hex(dst_attrs))
             continue
 
         if src.is_file():
@@ -108,7 +113,7 @@ def sync():
                 if not DRY_RUN:
                     dst.parent.mkdir(parents=True, exist_ok=True)
                     shutil.copy2(src, dst)
-
+                    
     # 删除 B 中 A 不存在的文件
     for dst in sorted(B.rglob("*"), reverse=True):
         rel = dst.relative_to(B)
